@@ -1,38 +1,38 @@
 package me.shuang.insomnia_server.config
 
-import org.springframework.context.annotation.Bean
+import me.shuang.insomnia_server.interceptor.CrossOriginInterceptor
+import me.shuang.insomnia_server.interceptor.TokenInterceptor
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.web.filter.CorsFilter
+import org.springframework.http.converter.BufferedImageHttpMessageConverter
+import org.springframework.http.converter.HttpMessageConverter
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
 /**
  * @author shuang
  * @date 2021-05-06
  */
+private const val PATH_ALL = "/**"
+private const val PATH_LOGIN = "/login/**"
+private const val PATH_REGISTER = "/register/**"
+private const val PATH_TEST = "/test/**"
+private const val PATH_OPEN = "/open/**"
+private const val PATH_ERROR = "/error"
+
 @Configuration
-class WebConfiguration {
+class WebConfiguration : WebMvcConfigurer {
 
-//    @Bean
-//    fun corsOriginConfigurer(): WebMvcConfigurer = object : WebMvcConfigurer {
-//        override fun addCorsMappings(registry: CorsRegistry) {
-//            registry.addMapping("/**")
-//        }
-//    }
+    override fun addInterceptors(registry: InterceptorRegistry) {
+        registry.addInterceptor(CrossOriginInterceptor()).addPathPatterns(listOf(PATH_ALL))
+        registry.addInterceptor(TokenInterceptor()).addPathPatterns(listOf(PATH_ALL))
+            .excludePathPatterns(listOf(PATH_LOGIN, PATH_REGISTER, PATH_TEST, PATH_OPEN, PATH_ERROR))
+        super.addInterceptors(registry)
+    }
 
-//    private fun corsConfig(): CorsConfiguration = CorsConfiguration().apply {
-//        addAllowedOrigin("*")
-//        addAllowedHeader("*")
-//        addAllowedMethod("*")
-//        allowCredentials = true
-//        maxAge = 3600L
-//    }
-//
-//    @Bean
-//    fun corsFilter(): CorsFilter {
-//        val source = UrlBasedCorsConfigurationSource()
-//        source.registerCorsConfiguration("/**", corsConfig())
-//        return CorsFilter(source)
-//    }
+    override fun configureMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
+        converters.add(0, MappingJackson2HttpMessageConverter())
+        converters.add(BufferedImageHttpMessageConverter())
+    }
 }

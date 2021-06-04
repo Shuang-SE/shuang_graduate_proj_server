@@ -1,4 +1,4 @@
-package me.shuang.insomnia_server.filter
+package me.shuang.insomnia_server.interceptor
 
 import org.apache.logging.log4j.util.Strings
 import org.springframework.web.servlet.HandlerInterceptor
@@ -35,23 +35,5 @@ class CrossOriginInterceptor : HandlerInterceptor {
         response.characterEncoding = "UTF-8"
 
         return super.preHandle(request, response, handler)
-    }
-
-    override fun postHandle(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        handler: Any,
-        modelAndView: ModelAndView?
-    ) {
-        super.postHandle(request, response, handler, modelAndView)
-    }
-
-    override fun afterCompletion(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        handler: Any,
-        ex: Exception?
-    ) {
-        super.afterCompletion(request, response, handler, ex)
     }
 }

@@ -49,6 +49,14 @@ dependencies {
     implementation(group = "com.google.code.gson", name = "gson", version = "2.8.6")
     // https://mvnrepository.com/artifact/com.auth0/java-jwt
     implementation(group = "com.auth0", name = "java-jwt", version = "3.15.0")
+    // https://mvnrepository.com/artifact/joda-time/joda-time
+    implementation(group = "joda-time", name = "joda-time", version = "2.10.10")
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation(group = "org.json", name = "json", version = "20210307")
+    // https://mvnrepository.com/artifact/com.qiniu/qiniu-java-sdk
+    implementation(group = "com.qiniu", name = "qiniu-java-sdk", version = "7.7.0")
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+    implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = "1.4.32")
 
 
 }
